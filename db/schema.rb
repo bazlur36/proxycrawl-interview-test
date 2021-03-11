@@ -19,7 +19,9 @@ ActiveRecord::Schema.define(version: 2021_03_10_130501) do
     t.string "title"
     t.string "img_url"
     t.float "price"
-    t.integer "total_review"
+    t.string "customer_review"
+    t.integer "review_count"
+    t.string "asin"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
