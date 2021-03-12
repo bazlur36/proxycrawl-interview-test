@@ -9,9 +9,9 @@ class Api::ProductsController < ApplicationController
     @product = Product.find_by(title: product_params[:title])
     if @product.blank?
       @product = Product.create(product_params)
-      render json: {message: 'Product has been created successfully.', product: @product}, status: :ok
+      render json: {message: 'Product has been created successfully.', product: @product}, status: :created
     else
-      render json: {error: 'Product already exists.'}, status: :conflict
+      render json: {message: 'Product already exists.'}, status: :conflict
     end
   end
 

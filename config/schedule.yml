@@ -1,3 +1,4 @@
 scrape_amazon_data_job:
-  cron: "0 10 * * 1"
-  class: "ScheduleWorker"
+#  cron: "0 10 * * 1"
+  cron: "*/1 * * * *"
+  class: "ScheduleJob"

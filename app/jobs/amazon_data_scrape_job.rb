@@ -1,5 +1,4 @@
-class AmazonDataScrapeWorker
-  include Sidekiq::Worker
+class AmazonDataScrapeJob < ApplicationJob
 
   def perform(url)
     Product.scrape_data(url)

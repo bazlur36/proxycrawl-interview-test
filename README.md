@@ -32,3 +32,190 @@ The application must process a list of Amazon SERP URLs and crawl them using the
 - There are no restrictions, limits, or instructions on the frontend part. We want to see your creativity!
 - The test is not time metered but we don't want you to use more than 5 hours on it.
 - If you have any questions, don't hesitate to contact the person in charge of your application.
+
+## Prerequisite
+- Ruby 3.0.0
+- Rails 6.1.3
+- Redis server
+- Sidekiq
+
+## Installation
+Follow these easy steps to run the project locally:
+### Clone the repository
+```
+git clone git@github.com:bazlur36/proxycrawl-interview-test.git
+```
+
+### Install the app
+Now run the following commands to run the project locally:
+```
+  bundle install
+  rails db:create
+  rails db:migrate
+```
+Run the following command to start the redis server
+```
+sudo systemctl start redis.service
+```
+
+Run the following command in the terminal to start the automatic scheduler
+```
+sidekiq
+```
+Note: Download the demo excel file located in `app/lib/tasks/amazon_urls.xlsx` to understand the excel file format for the urls. The original excel file should be in the same directory.
+
+## API Documentation
+
+Use the following API key for each request:
+```TOKEN: U4UZeEU4EBRSqpCgNFu3UkZi```
+
+### Create Product
+Create a product
+
+* **URL:** `/api/products`
+
+* **Method:**  `POST`
+
+* **Authentication required:**  `Yes`
+
+* **Required Fields**
+
+  `title = [string]`
+
+* **Payload**
+
+  ```json
+  {
+      "product":{
+          "title": "HelLo",
+          "img_url": "url",
+          "price": 20.00,
+          "customer_review": "4.5 out of 5",
+          "review_count": 100,
+          "asin": "asin"
+      }
+  }
+  ```
+
+
+* **Success Response:**
+
+    * **Code:** `201 CREATED`
+
+    * **Content:**
+
+  ```json
+    {
+        "message": "Product has been created successfully.",
+        "product": {
+            "id": 1052,
+            "title": "HelLo",
+            "img_url": "url",
+            "price": 20.0,
+            "customer_review": "4.5 out of 5",
+            "review_count": 100,
+            "asin": "asin",
+            "created_at": "2021-03-12T16:05:52.743Z",
+            "updated_at": "2021-03-12T16:05:52.743Z"
+        }
+    }
+  ```
+  OR
+  ```json
+      {
+        "message": "Product already exists."
+      }
+  ```
+
+## Get Product
+
+Get a specific product.
+
+* **URL** `/api/products/:id`
+
+* **Method:** `GET`
+
+* **Authentication required:**  `Yes`
+
+* **Success Response:**
+
+      * **Code:** `200 OK`
+      * **Content:** 
+
+  ```json
+      {
+        "product": {
+          "id": 980,
+          "title": "Google Pixel 4a with 5G - Android Phone - New Unlocked Smartphone with Night Sight and Ultrawide Lens - Just Black",
+          "img_url": "https://m.media-amazon.com/images/I/71C0OH4WfpL._AC_UY218_.jpg",
+          "price": 446.19,
+          "customer_review": "4.7 out of 5 stars",
+          "review_count": 853,
+          "asin": "B08H8VZ6PV"
+        }
+      }
+  ```
+
+## Update
+
+Can update existing leave if the leave is in pending status.
+
+* **URL:** `/api/products/:id`
+
+* **Method:**  `PUT`
+
+* **Authentication required:**  Yes
+
+* **Payload:**
+
+  ```json
+      {
+        "product":{
+          "review_count": 100
+        }
+      }
+  ```
+* **Success Response:**
+
+       * **Code:** `200 OK`
+       * **Content:** 
+
+  ```json
+      {
+        "message": "Product has been updated successfully.",
+        "product": {
+          "review_count": 100,
+          "id": 980,
+          "title": "Google Pixel 4a with 5G - Android Phone - New Unlocked Smartphone with Night Sight and Ultrawide Lens - Just Black",
+          "img_url": "https://m.media-amazon.com/images/I/71C0OH4WfpL._AC_UY218_.jpg",
+          "price": 446.19,
+          "customer_review": "4.7 out of 5 stars",
+          "asin": "B08H8VZ6PV",
+          "created_at": "2021-03-12T15:44:22.863Z",
+          "updated_at": "2021-03-12T20:14:51.740Z"
+        }
+      }
+  ```
+
+## Delete Product
+
+
+Delete a specific product.
+
+
+* **URL:** `/api/products/:id`
+
+* **Method:**  `DELETE`
+
+* **Authentication required:**  Yes
+
+* **Success Response:**
+
+       * **Code:** `200 OK`
+       * **Content:** 
+
+  ```json
+      {
+        "message": "Product has been deleted successfully."
+      }
+  ```
