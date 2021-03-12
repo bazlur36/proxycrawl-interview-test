@@ -56,3 +56,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'proxycrawl'
 gem 'nokogiri', '~> 1.6', '>= 1.6.8'
+gem 'redis'
+gem 'sidekiq'
+gem 'sidekiq-cron'
+gem "roo", "~> 2.8.0"
+gem 'dotenv-rails'

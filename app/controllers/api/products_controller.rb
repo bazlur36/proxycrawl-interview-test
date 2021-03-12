@@ -1,5 +1,6 @@
 class Api::ProductsController < ApplicationController
 
+  before_action :authenticate
   skip_before_action :verify_authenticity_token
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   before_action :set_product, except: [:create]
@@ -34,6 +35,13 @@ class Api::ProductsController < ApplicationController
   end
 
   private
+
+  def authenticate
+    api_key = request.headers[:TOKEN]
+    if api_key.blank? || !ActiveSupport::SecurityUtils.secure_compare(api_key, ENV["PROXYCRAWL_API_KEY"])
+      render json: {error: 'Unauthorized!!'}, status: :unauthorized
+    end
+  end
 
   def set_product
     @product = Product.find(params[:id])
