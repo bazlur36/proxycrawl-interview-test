@@ -219,3 +219,6 @@ Delete a specific product.
         "message": "Product has been deleted successfully."
       }
   ```
+  
+##Postman collection
+https://www.getpostman.com/collections/137dc609185c7d7b1684
