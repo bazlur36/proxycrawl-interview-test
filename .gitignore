@@ -38,4 +38,3 @@ yarn-debug.log*
 .browserslistrc
 /vendor
 /test/tmp/
-.env
